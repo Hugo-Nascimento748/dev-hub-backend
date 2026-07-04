@@ -1,4 +1,4 @@
-package com.devhub.api.api.exception;
+package com.devhub.api.web.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
