@@ -1,4 +1,4 @@
-package com.devhub.api.api.exception;
+package com.devhub.api.web.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

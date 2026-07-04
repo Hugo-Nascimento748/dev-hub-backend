@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/devhub_db
@@ -8,3 +11,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
