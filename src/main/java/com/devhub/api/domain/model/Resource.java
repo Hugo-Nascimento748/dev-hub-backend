@@ -3,6 +3,8 @@ package com.devhub.api.domain.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Resources")
@@ -32,4 +34,12 @@ public class Resource {
     protected void onCreate() {
         this.createdAt = Instant.now();
     }
+
+    @ManyToMany
+    @JoinTable(
+            name = "resource_tags",
+            joinColumns = @JoinColumn(name = "resource_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
 }
