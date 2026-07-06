@@ -23,16 +23,13 @@ public class ResourceService {
 
     @Transactional
     public Resource save(ResourceRequest request) {
-        // 1. Usamos o ScrapingService para buscar os dados na internet
         var metadata = scrapingService.getMetadata(request.url());
 
-        // 2. Criamos o objeto Resource com o que veio do Scraping
         Resource resource = new Resource();
-        resource.setThumbnailUrl(request.url());
-        resource.setTitle(metadata.title());
-        resource.setDescription(metadata.description());
+        resource.setUrl(request.url()); // O link que o usuário enviou
+        resource.setTitle(metadata.title()); // Título real do site
+        resource.setDescription(metadata.description()); // Descrição real do site
 
-        // 3. Processamos as Tags (Busca se já existe, se não, cria uma nova)
         if (request.tags() != null && !request.tags().isEmpty()) {
             Set<Tag> managedTags = request.tags().stream()
                     .map(tagName -> tagRepository.findByName(tagName.toLowerCase().trim())
@@ -41,7 +38,6 @@ public class ResourceService {
             resource.setTags(managedTags);
         }
 
-        // 4. Salvamos tudo no banco
         return repository.save(resource);
     }
 

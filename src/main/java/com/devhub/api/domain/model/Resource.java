@@ -25,6 +25,8 @@ public class Resource {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    private String url;
+
     private String thumbnailUrl;
 
     @Column(nullable = false)
