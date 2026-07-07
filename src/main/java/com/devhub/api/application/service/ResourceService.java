@@ -44,4 +44,5 @@ public class ResourceService {
     public List<Resource> findAll() {
         return repository.findAll();
     }
+    public List<Resource> findByTag(String tag){ return repository.findByTags_NameIgnoreCase(tag.trim()); }
 }

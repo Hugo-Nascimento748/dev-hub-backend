@@ -25,7 +25,12 @@ public class ResourceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Resource>> findAll(){
+    public ResponseEntity<List<Resource>> findAll(@RequestParam(required = false) String tag ) {
+        if (tag != null && !tag.isBlank()){
+            List<Resource> filtered = service.findByTag(tag);
+            return ResponseEntity.ok(filtered);
+        }
+
         return ResponseEntity.ok(service.findAll());
     }
 }
