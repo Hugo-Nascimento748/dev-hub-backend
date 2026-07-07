@@ -7,6 +7,17 @@ spring:
     username: devuser
     password: devpassword
     driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+      cache-null-vallues: false
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,3 +25,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23lijaePf0jN5EYwFP
+            client-secret: 3a0f0f5826ddbaee9e0d2c9ddd33237de5bb790c
+            scope:
+              - user:email
+              - read:user
