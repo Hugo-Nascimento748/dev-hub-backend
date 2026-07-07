@@ -16,15 +16,15 @@ public class VoteService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void vote(Long resourceId, Long userId, Integer value) {
+    public void vote(Long resourceId, String githubId, Integer value) {
         // 1. Busca as entidades (ou lança erro se não achar)
         Resource resource = resourceRepository.findById(resourceId)
                 .orElseThrow(() -> new RuntimeException("Recurso não encontrado"));
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByGithubId(githubId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         // 2. Verifica se o usuário já votou neste recurso
-        var existingVote = voteRepository.findByUserIdAndResourceId(userId, resourceId);
+        var existingVote = voteRepository.findByUserIdAndResourceId(user.getId(), resourceId);
 
         if (existingVote.isPresent()) {
             Vote vote = existingVote.get();
