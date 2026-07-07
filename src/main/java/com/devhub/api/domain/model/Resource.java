@@ -44,4 +44,6 @@ public class Resource {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags = new HashSet<>();
+
+    private Integer voteCount = 0;
 }
