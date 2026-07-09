@@ -21,6 +21,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Mantemos desabilitado para facilitar os testes agora
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/swagger-ui/**", "/v3/api/docs/**", "/swagger-ui-html").permitAll()
                         .requestMatchers(HttpMethod.GET, "/resources/**").permitAll() // Qualquer um pode ver os links
                         .anyRequest().authenticated() // Para votar ou postar, precisa estar logado
                 )
