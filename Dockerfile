@@ -18,4 +18,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8081
 
 # Comando para rodar a aplicação
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "app.jar"]
+ENTRYPOINT ["java", "-Djava.net.preferIPv4Stack=true", "-Xmx384m", "-Xms384m", "-jar", "app.jar"]
