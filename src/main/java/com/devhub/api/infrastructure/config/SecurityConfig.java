@@ -24,14 +24,28 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable()) // Mantemos desabilitado para facilitar os testes agora
+                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**", "/v3/api/docs/**", "/swagger-ui-html").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/resources/**").permitAll() // Qualquer um pode ver os links
-                        .anyRequest().authenticated() // Para votar ou postar, precisa estar logado
+                        // Liberamos TODOS os caminhos possíveis que o Swagger utiliza
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security"
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/resources/**").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))); // Habilita o login do GitHub
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                );
 
         return http.build();
     }
