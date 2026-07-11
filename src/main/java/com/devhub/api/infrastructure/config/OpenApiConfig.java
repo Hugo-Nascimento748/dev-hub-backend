@@ -11,16 +11,12 @@ import io.swagger.v3.oas.models.servers.Server;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI customOpenAPI(){
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .addServersItem(new Server().url("http://localhost:8081").description("Servidor Local"))
-                .info(new Info()
+                .addServersItem(new io.swagger.v3.oas.models.servers.Server().url("http://localhost:8081"))
+                .info(new io.swagger.v3.oas.models.info.Info()
                         .title("DevResources Hub API")
                         .version("1.0")
-                        .description("Plataforma de curadoria de links e recursos para desenvolvedores.")
-                        .contact(new Contact()
-                                .name("Hugo Nascimento")
-                                .email("nascimentohugo748@gmail.com")));
-
+                        .description("Plataforma de curadoria de links"));
     }
 }

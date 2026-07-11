@@ -1,27 +1,10 @@
 
 services:
-  db:
-    image: postgres:15-alpine
-    container_name: dev-hub-db
-    environment:
-      POSTGRES_USER: devuser
-      POSTGRES_PASSWORD: devpassword
-      POSTGRES_DB: devhub_db
-    ports:
-      - "5432:5432"
-  redis:
-    image: redis:alpine
-    container_name: dev-hub-redis
-    ports:
-      - "6379:6379"
   api:
     build: .
     container_name: dev-hub-api
     ports:
       - "8081:8081"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/devhub_db
-      - SPRING_DATA_REDIS_HOST=redis
-    depends_on:
-      - db
-      - redis
+    #environment:
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/devhub_db
+      #- SPRING_DATA_REDIS_HOST=redis
