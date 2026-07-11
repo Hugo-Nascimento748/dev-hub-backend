@@ -1,16 +1,19 @@
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/devhub_db
-    username: devuser
-    password: devpassword
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   data:
     redis:
-      host: localhost
+      host: ${SPRING_DATA_REDIS_HOST}
       port: 6379
+      password: ${SPRING_DATA_REDIS_PASSWORD}
+      ssl:
+        enabled: true
 
   cache:
     type: redis
@@ -32,7 +35,7 @@ spring:
         registration:
           github:
             client-id: Ov23lijaePf0jN5EYwFP
-            client-secret: 3a0f0f5826ddbaee9e0d2c9ddd33237de5bb790c
+            client-secret: 498c7928e9a98d5fc95a2e2eb51acc7d5a79ab44
             scope:
               - user:email
               - read:user
