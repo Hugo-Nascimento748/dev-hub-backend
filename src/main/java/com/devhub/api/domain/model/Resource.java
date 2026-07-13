@@ -28,6 +28,7 @@ public class Resource implements Serializable{
 
     private String url;
 
+    @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
     @Column(nullable = false)
@@ -46,5 +47,6 @@ public class Resource implements Serializable{
     )
     private Set<Tag> tags = new HashSet<>();
 
+    @Column(name = "vote_count")
     private Integer voteCount = 0;
 }
