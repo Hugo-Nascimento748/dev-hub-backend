@@ -28,28 +28,25 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
+                .requiresChannel(channel -> channel.anyRequest().requiresSecure()) // Força HTTPS
                 .authorizeHttpRequests(auth -> auth
-                        // Liberamos TODOS os caminhos possíveis que o Swagger utiliza
                         .requestMatchers(
                                 "/v3/api-docs/**",
-                                "/v3/api-docs.yaml",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/webjars/**",
-                                "/swagger-resources/**",
-                                "/configuration/ui",
-                                "/configuration/security"
+                                "/swagger-resources/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/resources/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
                 .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)
-                        )
-                );
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .defaultSuccessUrl("/me", true) // Após o login, ele te joga para os seus dados
+                )
+        // Remova ou comente a linha do authenticationEntryPoint se o login falhar
+        // .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+        ;
 
         return http.build();
     }

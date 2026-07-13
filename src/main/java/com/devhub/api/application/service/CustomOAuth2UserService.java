@@ -22,15 +22,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String githubId = oAuth2User.getAttribute("id").toString();
         String name = oAuth2User.getAttribute("login");
         String email = oAuth2User.getAttribute("email");
+        if (email == null){
+            email = oAuth2User.getAttribute("login") + "@github.com";
+        }
         String avatarUrl = oAuth2User.getAttribute("avatar_url");
 
         // Regra de Negócio: Busca se já existe, senão cria um novo
+        String finalEmail = email;
         userRepository.findByGithubId(githubId)
                 .orElseGet(() -> {
                     User newUser = new User();
                     newUser.setGithubId(githubId);
                     newUser.setUsername(name);
-                    newUser.setEmail(email != null ? email : name + "@github.com");
+                    newUser.setEmail(finalEmail != null ? finalEmail : name + "@github.com");
                     newUser.setAvatarUrl(avatarUrl);
                     return userRepository.save(newUser);
                 });
