@@ -3,15 +3,14 @@ server:
   forward-headers-strategy: framework
 spring:
   datasource:
-    url: "${SPRING_DATASOURCE_URL}"
-    username: "${SPRING_DATASOURCE_USERNAME}"
-    password: "${SPRING_DATASOURCE_PASSWORD}"
-    driver-class-name: org.postgresql.Driver
-  data:
-    redis:
-      host: ${SPRING_DATA_REDIS_HOST}
-      port: 6379
-      password: ${SPRING_DATA_REDIS_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/devhub_db}
+    username: ${SPRING_DATASOURCE_USERNAME:devuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:devpassword}
+    data:
+      redis:
+        host: ${SPRING_DATA_REDIS_HOST:localhost}
+        password: ${SPRING_DATA_REDIS_PASSWORD:}
+        port: 6379
       ssl:
         enabled: true
 
