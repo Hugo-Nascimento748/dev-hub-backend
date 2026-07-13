@@ -13,12 +13,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .addServersItem(new io.swagger.v3.oas.models.servers.Server()
-                        .url("https://dev-hub-backend-frmz.onrender.com")
-                        .description("Servidor de Produção"))
-                .addServersItem(new io.swagger.v3.oas.models.servers.Server()
-                        .url("http://localhost:8081")
-                        .description("Servidor Local"))
+                .addServersItem(new io.swagger.v3.oas.models.servers.Server().url("/")) // O segredo é este: "/"
                 .info(new io.swagger.v3.oas.models.info.Info()
                         .title("DevResources Hub API")
                         .version("1.0"));
